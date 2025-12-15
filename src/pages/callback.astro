@@ -14,18 +14,6 @@ if(error !== '') {
     
 }
 
-/*
-    # exchange the authorization code for an access token
-    response = requests.post("https://api.webflow.com/oauth/access_token", data={
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'code': request.args['code'],
-        'grant_type': 'authorization_code',
-        'redirect_uri': REDIRECT_URL,
-    }, headers={'Accept': 'application/json'})
-
-    */
-
 // get our access token
 const params = new URLSearchParams();
 params.append('client_id', CLIENT_ID);
@@ -45,7 +33,7 @@ const atReq = await fetch('https://api.webflow.com/oauth/access_token', {
 
 const at = await atReq.json();
 console.log('at', at);
-Astro.session?.set('access_token', at.access_token);
+await Astro.session?.set('access_token', at.access_token);
 return Astro.redirect('/app');
     
 

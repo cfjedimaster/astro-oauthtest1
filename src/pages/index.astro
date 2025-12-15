@@ -2,11 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 
 const CLIENT_ID = Astro.locals.runtime.env.CLIENT_ID;
-const CLIENT_SECRET = Astro.locals.runtime.env.CLIENT_SECRET;
 const REDIRECT_URL = Astro.locals.runtime.env.REDIRECT_URL;
-
-//import { Section, Container, Block, Link } from '../../devlink/_Builtin/Basic';
-
 
 const getAuthURL = () => {
   let params = new URLSearchParams();
@@ -19,6 +15,7 @@ const getAuthURL = () => {
 }
 
 let token = await Astro.session?.get('access_token');
+console.log(token);
 let needLogin = token == null;
 ---
 
@@ -40,7 +37,7 @@ let needLogin = token == null;
 
   { !needLogin && 
     <p>
-    Welcome - view your <a href="app/sites">sites</a> to start examining your CMS collection types.
+    Welcome - view your <a href="/app/sites">sites</a> to start examining your CMS collection types.
     </p>
   }
 
