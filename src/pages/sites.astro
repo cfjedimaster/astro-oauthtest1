@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const token = Astro.locals.access_token;
+
+async function getSites(token) {
+    let req = await fetch('https://api.webflow.com/v2/sites', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    });
+    return (await req.json()).sites;
+}
+
+const sites = await getSites(token);
+
+---
+
+<Layout>
+
+<h2>Sites</h2>
+
+<ul>
+    { sites.map((s:any) => <li><a href={"/app/site/"+s.id + "?dn=" + encodeURIComponent(s.displayName)}>{s.displayName}</a></li>)}
+</ul>
+
+</Layout>

@@ -1,67 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Section, Container, Block, Link } from '../../devlink/_Builtin/Basic';
+
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URL = process.env.REDIRECT_URL;
+
+//import { Section, Container, Block, Link } from '../../devlink/_Builtin/Basic';
+
+/*
+        'state': session['oauth2_state'],
+  to do - state for security
+*/
+const getAuthURL = () => {
+  let params = new URLSearchParams();
+  params.set('client_id', CLIENT_ID);
+  params.set('redirect_url', REDIRECT_URL);
+  params.set('response_type','code');
+  params.set('scope','sites:read cms:read');
+  let url = 'https://webflow.com/oauth/authorize?' + params.toString();
+  return url;
+}
+
+let token = await Astro.session?.get('access_token');
+let needLogin = token == null;
+console.log('in home page, token is', token, token == null);
 ---
 
 <Layout>
-  <Section
-    client:load
-    tag="section"
-    className="margin-bottom-24px"
-    style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}
-  >
-    <Container>
-      <Block
-        tag="div"
-        className="hero-split"
-        style={{
-          textAlign: 'center',
-          maxWidth: '600px',
-          margin: '0 auto'
-        }}
-      >
-        <h1 class="margin-bottom-24px">Testing OAuth</h1>
-        <p class="margin-bottom-24px">This is a simple test using Basic components with enhanced styling.</p>
-        <div style={{marginTop: '12px'}}>
-          <Link
-            button={true}
-            options={{
-              href: "https://developers.webflow.com/webflow-cloud/getting-started"
-            }}
-            className="button-primary"
-          >
-            Get Started
-          </Link>
-        </div>
-      </Block>
-    </Container>
-  </Section>
+
+  <h1>Testing an OAuth Login</h1>
+
+  { needLogin &&
+    <p>
+      <a href={ getAuthURL() }>Login with WF</a>
+    </p>
+  }
+
+  { !needLogin && 
+    <p>
+    Welcome! <a href="app/sites">Sites</a>
+    </p>
+  }
 </Layout>
 
-<style>
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(83.21deg, #3245ff 0%, #bc52ee 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .button-primary {
-    border-radius: 4px;
-    background: #146ef5;
-    color: #ffffff;
-    box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.25), inset 0px 29px 23px -16px rgba(255, 255, 255, 0.04), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.2);
-  }
-
-  .button-primary:hover {
-    background: #2c80fd;
-    color: #ffffff;
-  }
-</style>
