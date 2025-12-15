@@ -7,10 +7,7 @@ const REDIRECT_URL = Astro.locals.runtime.env.REDIRECT_URL;
 
 //import { Section, Container, Block, Link } from '../../devlink/_Builtin/Basic';
 
-/*
-        'state': session['oauth2_state'],
-  to do - state for security
-*/
+
 const getAuthURL = () => {
   let params = new URLSearchParams();
   params.set('client_id', CLIENT_ID);
@@ -23,23 +20,29 @@ const getAuthURL = () => {
 
 let token = await Astro.session?.get('access_token');
 let needLogin = token == null;
-console.log('in home page, token is', token, token == null);
 ---
 
 <Layout>
 
-  <h1>Testing an OAuth Login</h1>
+  <h1>CMS Type Report Tool</h1>
+
+  <p>
+    This tool lets you generate a report on your collection types and provides a JSON dump of the fields for each type. 
+    This is useful for working with the <a href="https://developers.webflow.com/data/v2.0.0/reference/rest-introduction">Data APIs</a> and specifically
+    the <a href="https://developers.webflow.com/data/v2.0.0/reference/cms">CMS</a> endpoints.
+  </p>
 
   { needLogin &&
     <p>
-      <a href={ getAuthURL() }>Login with WF</a>
+      <a href={ getAuthURL() }>Login with WebFlow.</a>
     </p>
   }
 
   { !needLogin && 
     <p>
-    Welcome! <a href="app/sites">Sites</a>
+    Welcome - view your <a href="app/sites">sites</a> to start examining your CMS collection types.
     </p>
   }
+
 </Layout>
 
