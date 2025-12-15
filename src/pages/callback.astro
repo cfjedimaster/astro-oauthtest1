@@ -34,6 +34,9 @@ const atReq = await fetch('https://api.webflow.com/oauth/access_token', {
 const at = await atReq.json();
 console.log('at', at);
 await Astro.session?.set('access_token', at.access_token);
+// read the dang thing
+let temp = await Astro.session?.get('access_token');
+console.log('the dang thing is ', temp);
 return Astro.redirect('/app');
     
 
