@@ -51,7 +51,7 @@ const siteName = Astro.url.searchParams.get('dn');
 
     { collections.map((c:any) => 
         <div>
-            <h3>{c.displayName}</h3>
+            <h3>{c.displayName} ({c.id})</h3>
 <pre>
 {c.fields}
 </pre>
