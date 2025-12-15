@@ -1,9 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URL = process.env.REDIRECT_URL;
+const CLIENT_ID = Astro.locals.runtime.env.CLIENT_ID;
+const CLIENT_SECRET = Astro.locals.runtime.env.CLIENT_SECRET;
+const REDIRECT_URL = Astro.locals.runtime.env.REDIRECT_URL;
 
 //import { Section, Container, Block, Link } from '../../devlink/_Builtin/Basic';
 
