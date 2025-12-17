@@ -4,6 +4,8 @@ import Layout from '../layouts/Layout.astro';
 const CLIENT_ID = Astro.locals.runtime.env.CLIENT_ID;
 const REDIRECT_URL = Astro.locals.runtime.env.REDIRECT_URL;
 
+let base = import.meta.env.BASE_URL;
+
 const getAuthURL = () => {
   let params = new URLSearchParams();
   params.set('client_id', CLIENT_ID);
@@ -37,7 +39,7 @@ let needLogin = token == null;
 
   { !needLogin && 
     <p>
-    Welcome - view your <a href="/app/sites">sites</a> to start examining your CMS collection types.
+    Welcome - view your <a href={base + "/sites"}>sites</a> to start examining your CMS collection types.
     </p>
   }
 

@@ -7,6 +7,7 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   base: "/app",
+  site: "https://scratch-site-a4c4e8.webflow.io/app",
   output: "server",
   adapter: cloudflare({
     platformProxy: {
